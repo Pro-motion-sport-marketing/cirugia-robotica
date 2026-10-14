@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cirugía Robótica · 4 Videos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+[hidden]{display:none!important}
+/* Layout: columna única de lectura; un "embudo" de 4 etapas arriba que abre cada video en acordeón. */
+:root{
+  --bg:#F3F6F6; --surface:#FFFFFF; --ink:#13292B; --muted:#5B7072; --line:#D5E0E0;
+  --teal:#0F6B6E; --teal-soft:#E1EFEF; --rose:#B4466A; --rose-soft:#F7E6EC;
+  --s1:#7FB7B9; --s2:#3E9497; --s3:#0F6B6E; --s4:#B4466A;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1819; --surface:#152426; --ink:#E4EEEE; --muted:#93A9AB; --line:#26393B;
+  --teal:#5EC0C2; --teal-soft:#16383A; --rose:#E57EA0; --rose-soft:#3A1F2A;
+  --s1:#2E5F61; --s2:#3E8F92; --s3:#5EC0C2; --s4:#E57EA0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1819; --surface:#152426; --ink:#E4EEEE; --muted:#93A9AB; --line:#26393B;
+  --teal:#5EC0C2; --teal-soft:#16383A; --rose:#E57EA0; --rose-soft:#3A1F2A;
+  --s1:#2E5F61; --s2:#3E8F92; --s3:#5EC0C2; --s4:#E57EA0; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body);margin:0}
+.wrap{max-width:52rem;margin:0 auto;padding-inline:20px;padding-block:2.5rem 4rem;display:grid;gap:2.75rem}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+p{margin:0}
+
+/* Encabezado */
+header{display:grid;gap:1rem}
+header h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:700;letter-spacing:-.02em}
+header h1 span{color:var(--teal)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:40rem}
+.lede b{color:var(--ink);font-weight:600}
+
+/* Embudo */
+.funnel{display:grid;gap:.5rem}
+.stage{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;
+  border:0;cursor:pointer;text-align:left;color:#fff;font:inherit;
+  padding:.9rem 1.2rem;border-radius:10px;margin-inline:auto;transition:transform .2s ease, filter .2s}
+.stage:hover{transform:translateX(4px);filter:brightness(1.06)}
+.stage:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.stage[data-n="1"]{background:var(--s1);width:100%;color:var(--ink)}
+.stage[data-n="2"]{background:var(--s2);width:91%}
+.stage[data-n="3"]{background:var(--s3);width:82%}
+.stage[data-n="4"]{background:var(--s4);width:73%}
+.stage .n{font:500 .8rem var(--mono);opacity:.85}
+.stage .q{font:600 1.05rem/1.25 var(--display)}
+.stage .tag{font:500 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .55rem;border-radius:99px;background:rgba(255,255,255,.22);white-space:nowrap}
+.axis{display:flex;justify-content:space-between;font:500 .72rem var(--mono);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;padding-inline:.25rem}
+
+/* Controles */
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between}
+.btn{font:600 .9rem var(--body);color:var(--teal);background:var(--teal-soft);border:1px solid transparent;
+  padding:.45rem .85rem;border-radius:8px;cursor:pointer}
+.btn:hover{border-color:var(--teal)}
+.btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+/* Videos */
+.videos{display:grid;gap:1rem}
+details.video{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+details.video[open]{border-color:var(--accent)}
+details.video summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:3rem 1fr auto;
+  gap:1rem;align-items:center;padding:1.15rem 1.25rem}
+details.video summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.num{width:3rem;height:3rem;border-radius:50%;display:grid;place-items:center;
+  font:700 1.25rem var(--display);background:var(--accent);color:#fff}
+.sum-text{display:grid;gap:.25rem;min-width:0}
+.sum-text h3{font-size:1.25rem;font-weight:700}
+.sum-text .eyebrow{color:var(--accent)}
+.chev{width:1.6rem;height:1.6rem;transition:transform .25s ease;color:var(--muted)}
+details[open] .chev{transform:rotate(180deg)}
+.body{padding:0 1.25rem 1.4rem;display:grid;gap:1.25rem;border-top:1px solid var(--line);padding-top:1.25rem}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem}
+.block{display:grid;gap:.4rem;min-width:0}
+.block p{color:var(--ink)}
+.script{background:var(--bg);border-radius:10px;padding:1rem 1.1rem;display:grid;gap:.75rem}
+.script-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem}
+.script blockquote{margin:0;font-size:1.08rem;line-height:1.65;max-width:62ch}
+.meta{font:500 .75rem var(--mono);color:var(--muted)}
+.close{border-left:4px solid var(--accent);background:var(--accent-soft);padding:.9rem 1.1rem;border-radius:0 10px 10px 0;
+  font:600 1.15rem/1.4 var(--display)}
+.close .eyebrow{display:block;margin-bottom:.35rem;color:var(--accent);font-family:var(--mono)}
+.v1,.v2,.v3{--accent:var(--teal);--accent-soft:var(--teal-soft)}
+.v4{--accent:var(--rose);--accent-soft:var(--rose-soft)}
+
+/* Tabla comparativa */
+.compare{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.compare table{border-collapse:collapse;width:100%;min-width:32rem;font-size:.95rem}
+.compare th,.compare td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.compare thead th{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.compare tbody th{font-weight:600}
+.compare tr:last-child td,.compare tr:last-child th{border-bottom:0}
+.compare td.hl{background:var(--teal-soft)}
+.note{font-size:.88rem;color:var(--muted);font-style:italic}
+
+/* Chips de beneficios / aplicaciones */
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{padding:.35rem .75rem;border-radius:99px;border:1px solid var(--accent);color:var(--accent);font-weight:600;font-size:.92rem}
+
+/* Lógica */
+.logic{display:grid;gap:1.25rem}
+.logic h2{font-size:1.8rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;display:grid;gap:.35rem;align-content:start}
+.step b{font:700 1.05rem var(--display)}
+.step .eyebrow{color:var(--teal)}
+.step:last-child .eyebrow{color:var(--rose)}
+.step span:last-child{color:var(--muted);font-size:.95rem}
+.thesis{font:600 1.25rem/1.4 var(--display);max-width:40rem}
+/* Caso ilustrativo y guion por tiempos */
+.case{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.5rem}
+.case>div{background:var(--accent-soft);border-radius:10px;padding:.7rem .85rem;display:grid;gap:.2rem;min-width:0}
+.case .k{font:500 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.beats{display:grid;gap:.85rem}
+.beats p{display:grid;gap:.15rem}
+.beat{font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-style:normal}
+/* Inversión */
+.invest{display:grid;gap:1.25rem}
+.invest h2{font-size:1.8rem}
+.gear{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+.gear li{display:grid;gap:.1rem;padding-left:1rem;border-left:3px solid var(--teal)}
+.gear span{color:var(--muted);font-size:.95rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.2rem;display:grid;gap:1rem;min-width:0}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;background:var(--bg);padding:.3rem;border-radius:10px}
+.seg button{font:700 1.1rem var(--display);border:0;background:transparent;color:var(--muted);padding:.5rem;border-radius:7px;cursor:pointer}
+.seg button[aria-checked="true"]{background:var(--teal);color:var(--surface)}
+.seg button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.rows{margin:0;display:grid;gap:.5rem;font-variant-numeric:tabular-nums}
+.rows>div{display:flex;justify-content:space-between;gap:1rem}
+.rows dt{color:var(--muted)}
+.rows dd{margin:0;font-weight:600}
+#discRow dd{color:var(--rose)}
+.rows .total{border-top:1px solid var(--line);padding-top:.6rem}
+.rows .total dt{color:var(--ink);font-weight:600}
+.rows .total dd{font:700 1.6rem var(--display);color:var(--teal)}
+.hint{font-size:.92rem;color:var(--muted)}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:1rem}
+
+@media (max-width:640px){
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .stage{width:100%!important;grid-template-columns:auto 1fr}
+  .stage .tag{grid-column:2;justify-self:start}
+  details.video summary{grid-template-columns:2.5rem 1fr auto;gap:.75rem}
+  .num{width:2.5rem;height:2.5rem;font-size:1.05rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Propuesta de contenidos · Ginecología</span>
+    <h1>Cirugía <span>robótica</span>, explicada en 4 videos</h1>
+    <p class="lede">Cuatro videos conectados que parten de la duda más común, <b>el costo</b>, y avanzan hacia diferencias, beneficios y aplicaciones en ginecología. <b>Sin vender la cirugía robótica desde el primer video.</b></p>
+  </header>
+
+  <section class="funnel" aria-label="Recorrido de la campaña">
+    <div class="axis"><span>Tema masivo</span><span>Tema específico</span></div>
+    <button class="stage" data-n="1" data-target="v1"><span class="n">01</span><span class="q">¿Cuánto cuesta?</span><span class="tag">Atracción</span></button>
+    <button class="stage" data-n="2" data-target="v2"><span class="n">02</span><span class="q">¿Qué diferencia hay?</span><span class="tag">Educación</span></button>
+    <button class="stage" data-n="3" data-target="v3"><span class="n">03</span><span class="q">¿Qué beneficios tiene?</span><span class="tag">Confianza</span></button>
+    <button class="stage" data-n="4" data-target="v4"><span class="n">04</span><span class="q">¿Sirve para mi problema?</span><span class="tag">Conversión</span></button>
+  </section>
+
+  <section class="videos" aria-label="Detalle de los videos">
+    <div class="bar">
+      <span class="eyebrow">Toca cada video para ver su guion</span>
+      <div style="display:flex;gap:.5rem">
+        <button class="btn" id="openAll">Abrir todos</button>
+        <button class="btn" id="closeAll">Cerrar todos</button>
+      </div>
+    </div>
+
+    <!-- VIDEO 1 -->
+    <details class="video v1" id="v1">
+      <summary>
+        <span class="num">1</span>
+        <span class="sum-text"><span class="eyebrow">Atracción</span><h3>¿La cirugía robótica es realmente cara?</h3></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="body">
+        <div class="pair">
+          <div class="block"><span class="eyebrow">Objetivo</span><p>Generar alcance y romper la percepción de que una cirugía con tecnología robótica necesariamente es inaccesible.</p></div>
+          <div class="block"><span class="eyebrow">Concepto</span><p>No mirar únicamente el precio de la cirugía, sino el <b>costo total del proceso</b>.</p></div>
+        </div>
+        <div class="block">
+          <span class="eyebrow">El costo total incluye</span>
+          <div class="chips"><span class="chip">Quirófano</span><span class="chip">Hospitalización</span><span class="chip">Recuperación</span><span class="chip">Días fuera de tus actividades</span></div>
+        </div>
+        <div class="script">
+          <div class="script-head"><span class="eyebrow">Guion tentativo</span><span class="meta" data-dur></span><button class="btn copy">Copiar guion</button></div>
+          <blockquote>“Cuando escuchas ‘cirugía robótica’, probablemente piensas: eso debe ser carísimo. Pero el costo de una cirugía no siempre termina en el quirófano. También hay que considerar hospitalización, recuperación y cuánto tiempo necesitas antes de volver a tus actividades. Por eso, dependiendo del procedimiento y de cada paciente, la cirugía robótica puede ser mucho más accesible de lo que imaginas.”</blockquote>
+        </div>
+        <div class="close"><span class="eyebrow">Cierre</span>“¿Tú también pensabas que cirugía robótica significaba pagar muchísimo más?”</div>
+      </div>
+    </details>
+
+    <!-- VIDEO 2 -->
+    <details class="video v2" id="v2">
+      <summary>
+        <span class="num">2</span>
+        <span class="sum-text"><span class="eyebrow">Educación</span><h3>Cirugía tradicional vs. laparoscópica vs. robótica</h3></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="body">
+        <div class="pair">
+          <div class="block"><span class="eyebrow">Objetivo</span><p>Educar y generar autoridad explicando las diferencias de manera muy sencilla.</p></div>
+          <div class="block"><span class="eyebrow">Concepto</span><p>Comparar las tres alternativas <b>sin presentar una como “la mejor”</b> para todos los casos.</p></div>
+        </div>
+        <div class="block">
+          <span class="eyebrow">Apoyo visual sugerido</span>
+          <div class="compare">
+            <table>
+              <thead><tr><th></th><th>Abierta</th><th>Laparoscópica</th><th>Robótica</th></tr></thead>
+              <tbody>
+                <tr><th>Incisiones</th><td>Una incisión más amplia</td><td>Varias incisiones pequeñas</td><td class="hl">Varias incisiones pequeñas</td></tr>
+                <tr><th>Visualización</th><td>Directa, a simple vista</td><td>Cámara en pantalla</td><td class="hl">Cámara 3D ampliada</td></tr>
+                <tr><th>Instrumentos</th><td>Manos del cirujano</td><td>Instrumentos rectos</td><td class="hl">Instrumentos articulados</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">Los tres ejes salen del guion; el texto de cada celda es una propuesta para gráficos en pantalla y debe validarlo la doctora.</p>
+        </div>
+        <div class="script">
+          <div class="script-head"><span class="eyebrow">Guion tentativo</span><span class="meta" data-dur></span><button class="btn copy">Copiar guion</button></div>
+          <blockquote>“Cirugía abierta, laparoscópica y robótica pueden buscar solucionar un mismo problema, pero no funcionan de la misma manera. Cambian las incisiones, la forma en la que el cirujano visualiza el procedimiento y la movilidad de los instrumentos. La cirugía robótica nos ofrece herramientas diferentes, pero la elección siempre depende del diagnóstico y de cada paciente.”</blockquote>
+        </div>
+        <div class="close"><span class="eyebrow">Cierre</span>“No existe una cirugía perfecta para todos. Existe una cirugía adecuada para cada caso.”</div>
+      </div>
+    </details>
+
+    <!-- VIDEO 3 -->
+    <details class="video v3" id="v3">
+      <summary>
+        <span class="num">3</span>
+        <span class="sum-text"><span class="eyebrow">Confianza</span><h3>¿Qué beneficios tiene realmente la cirugía robótica?</h3></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="body">
+        <div class="pair">
+          <div class="block"><span class="eyebrow">Objetivo</span><p>Aumentar el valor percibido de la tecnología y explicar por qué puede utilizarse.</p></div>
+          <div class="block"><span class="eyebrow">Concepto</span><p>Traducir la tecnología a <b>beneficios fáciles de entender</b>.</p></div>
+        </div>
+        <div class="block">
+          <span class="eyebrow">Beneficios que menciona el guion</span>
+          <div class="chips"><span class="chip">Visualización</span><span class="chip">Precisión</span><span class="chip">Movilidad</span><span class="chip">Abordaje mínimamente invasivo</span></div>
+        </div>
+        <div class="script">
+          <div class="script-head"><span class="eyebrow">Guion tentativo</span><span class="meta" data-dur></span><button class="btn copy">Copiar guion</button></div>
+          <blockquote>“Entonces, ¿por qué utilizar un robot para operar? No porque el robot haga la cirugía solo. El cirujano sigue teniendo el control. La diferencia está en que esta tecnología puede ofrecer mayor visualización, precisión y movilidad durante determinados procedimientos. Y en pacientes seleccionadas, un abordaje mínimamente invasivo puede favorecer aspectos importantes de su recuperación.”</blockquote>
+        </div>
+        <div class="close"><span class="eyebrow">Cierre</span>“El robot no reemplaza al cirujano. Es una herramienta que amplía lo que podemos hacer.”</div>
+      </div>
+    </details>
+
+    <!-- VIDEO 4 -->
+    <details class="video v4" id="v4">
+      <summary>
+        <span class="num">4</span>
+        <span class="sum-text"><span class="eyebrow">Conversión</span><h3>¿Qué podemos hacer con cirugía robótica en ginecología?</h3></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="body">
+        <div class="pair">
+          <div class="block"><span class="eyebrow">Objetivo</span><p>Llevar el tema directamente a la especialidad de la doctora y acercarnos a conversión.</p></div>
+          <div class="block"><span class="eyebrow">Concepto</span><p>Contar <b>el caso hipotético de una paciente</b> para que quien mira se identifique, y mostrar cómo la cirugía robótica resuelve ese padecimiento puntual.</p></div>
+        </div>
+        <div class="block">
+          <span class="eyebrow">Caso ilustrativo</span>
+          <div class="case">
+            <div><span class="k">Paciente</span><b>Ana, 34 años</b></div>
+            <div><span class="k">Síntoma</span><b>Dolor menstrual que la saca del trabajo cada mes</b></div>
+            <div><span class="k">Diagnóstico</span><b>Endometriosis profunda</b></div>
+            <div><span class="k">Abordaje</span><b>Cirugía robótica mínimamente invasiva</b></div>
+          </div>
+          <p class="note">En pantalla: “Caso ilustrativo. Cada paciente es diferente.” Así no se presenta como testimonio real ni como promesa de resultados.</p>
+        </div>
+        <div class="script">
+          <div class="script-head"><span class="eyebrow">Guion tentativo</span><span class="meta" data-dur></span><button class="btn copy">Copiar guion</button></div>
+          <blockquote class="beats">
+            <p><span class="beat">Gancho · 0–8 s</span>“Te presento a Ana. Tiene 34 años y, cada mes, el dolor de su menstruación la obliga a faltar al trabajo.</p>
+            <p><span class="beat">El problema · 8–19 s</span>Durante años le dijeron que era normal. No lo era. Ana tenía endometriosis, con lesiones en zonas profundas de la pelvis, muy cerca del intestino y de la vejiga.</p>
+            <p><span class="beat">Cómo ayuda el robot · 19–41 s</span>En un caso así, la cirugía robótica nos permite ver esas zonas ampliadas y en 3D, y trabajar con instrumentos que se mueven como una muñeca. Eso nos ayuda a retirar las lesiones con mucha precisión, cuidando los órganos que están alrededor. Y como se hace con incisiones pequeñas, la recuperación puede ser más llevadera.</p>
+            <p><span class="beat">El giro · 41–50 s</span>Pero Ana no llegó pidiendo un robot. Llegó buscando una respuesta. Primero evaluamos su caso y después decidimos el mejor abordaje.”</p>
+          </blockquote>
+        </div>
+        <div class="close"><span class="eyebrow">Cierre</span>“¿Te identificas con Ana? Si tienes una indicación de cirugía ginecológica, lo primero es conocer qué alternativas existen para tu caso.”</div>
+        <div class="block">
+          <span class="eyebrow">Otros casos para la misma estructura</span>
+          <div class="chips"><span class="chip">Miomas que causan sangrado abundante</span><span class="chip">Histerectomía</span><span class="chip">Quistes de ovario</span></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="logic" aria-label="Lógica de la campaña">
+    <span class="eyebrow">Lógica de la campaña</span>
+    <h2>De lo masivo a lo específico</h2>
+    <div class="steps">
+      <div class="step"><span class="eyebrow">Video 1 · Atracción</span><b>¿Cuánto cuesta?</b><span>Rompe el prejuicio del precio y abre la conversación.</span></div>
+      <div class="step"><span class="eyebrow">Video 2 · Educación</span><b>¿Qué diferencia hay?</b><span>Explica las tres opciones y da autoridad.</span></div>
+      <div class="step"><span class="eyebrow">Video 3 · Confianza</span><b>¿Qué beneficios tiene?</b><span>Aclara que el cirujano siempre tiene el control.</span></div>
+      <div class="step"><span class="eyebrow">Video 4 · Conversión</span><b>¿Sirve para mi problema?</b><span>Un caso como el de Ana lleva a la paciente a evaluar el suyo.</span></div>
+    </div>
+    <p class="thesis">Cada video responde la pregunta que deja abierta el anterior, y la invitación a consulta llega recién en el cuarto.</p>
+  </section>
+
+  <section class="invest" id="inversion" aria-label="Inversión">
+    <span class="eyebrow">Inversión</span>
+    <h2>Producción y valores</h2>
+    <div class="pair">
+      <div class="block">
+        <span class="eyebrow">Cómo producimos</span>
+        <ul class="gear">
+          <li><b>iPhone 16 Pro Max</b><span>Grabación en 4K, formato vertical para redes</span></li>
+          <li><b>Iluminación portátil</b><span>Luz complementaria en consultorio o quirófano</span></li>
+          <li><b>Micrófonos profesionales</b><span>Audio limpio de la doctora frente a cámara</span></li>
+        </ul>
+      </div>
+      <div class="calc">
+        <span class="eyebrow">Elige cuántos videos</span>
+        <div class="seg" role="radiogroup" aria-label="Cantidad de videos">
+          <button role="radio" aria-checked="false" data-q="1" id="q1">1</button>
+          <button role="radio" aria-checked="false" data-q="2" id="q2">2</button>
+          <button role="radio" aria-checked="false" data-q="3" id="q3">3</button>
+          <button role="radio" aria-checked="true" data-q="4" id="q4">4</button>
+        </div>
+        <dl class="rows">
+          <div><dt>Valor por video</dt><dd>$85</dd></div>
+          <div><dt>Subtotal</dt><dd id="sub">$340</dd></div>
+          <div id="discRow"><dt>Descuento campaña completa</dt><dd id="disc">−$40</dd></div>
+          <div class="total"><dt>Total</dt><dd id="tot">$300</dd></div>
+        </dl>
+        <p class="hint" id="hint">Con los 4 videos cada uno queda en $75.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Preparado por Pro Motion · Propuesta de contenidos, octubre de 2026. Valores en dólares. Duración estimada a 150 palabras por minuto, solo para el guion hablado.</footer>
+</div>
+
+<script>
+(function(){
+  const vids=[...document.querySelectorAll('details.video')];
+  // Texto hablado del guion, sin las etiquetas de tiempo
+  function spoken(q){const c=q.cloneNode(true);c.querySelectorAll('.beat').forEach(b=>b.remove());
+    return [...(c.querySelectorAll('p').length?c.querySelectorAll('p'):[c])].map(e=>e.textContent.trim()).join(' ').replace(/\s+/g,' ');}
+  // Duración estimada de cada guion (150 palabras/min)
+  vids.forEach(d=>{
+    const q=d.querySelector('blockquote'), m=d.querySelector('[data-dur]');
+    const words=spoken(q).split(/\s+/).length;
+    m.textContent=words+' palabras · ≈ '+Math.round(words/150*60)+' s';
+  });
+  // Embudo: abre y lleva al video
+  document.querySelectorAll('.stage').forEach(b=>b.addEventListener('click',()=>{
+    const d=document.getElementById(b.dataset.target);
+    d.open=true; d.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  }));
+  document.getElementById('openAll').onclick=()=>vids.forEach(d=>d.open=true);
+  document.getElementById('closeAll').onclick=()=>vids.forEach(d=>d.open=false);
+  // Copiar guion
+  document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',()=>{
+    const text=spoken(btn.closest('.script').querySelector('blockquote'));
+    const done=()=>{btn.textContent='Copiado';setTimeout(()=>btn.textContent='Copiar guion',1600)};
+    try{
+      navigator.clipboard.writeText(text).then(done,()=>sel(btn));
+    }catch(e){sel(btn)}
+  }));
+  function sel(btn){
+    const q=btn.closest('.script').querySelector('blockquote');
+    const r=document.createRange(); r.selectNodeContents(q);
+    const s=getSelection(); s.removeAllRanges(); s.addRange(r);
+    btn.textContent='Texto seleccionado';
+  }
+  // Calculadora de inversión: $85 c/u; los 4 videos se cierran en $300
+  const fmt=n=>'$'+(Number.isInteger(n)?n:n.toFixed(2).replace('.',','));
+  const seg=[...document.querySelectorAll('.seg button')];
+  function setQ(q){
+    seg.forEach(b=>b.setAttribute('aria-checked',String(+b.dataset.q===q)));
+    const sub=q*85, d=q===4?sub-300:0;
+    document.getElementById('sub').textContent=fmt(sub);
+    document.getElementById('discRow').hidden=!d;
+    document.getElementById('disc').textContent='−'+fmt(d);
+    document.getElementById('tot').textContent=fmt(sub-d);
+    document.getElementById('hint').textContent=q===4
+      ?'Con los 4 videos cada uno queda en $75. Ahorro de $40.'
+      :'Contratando los 4 videos el total se cierra en $300.';
+  }
+  seg.forEach(b=>b.addEventListener('click',()=>setQ(+b.dataset.q)));
+  setQ(4);
+  // Deep link: #v1..#v4 abre ese video
+  const h=location.hash.slice(1); const t=h&&document.getElementById(h);
+  if(t&&t.tagName==='DETAILS') t.open=true;
+  else vids[0].open=true;
+})();
+</script>
+
+</body>
+</html>
